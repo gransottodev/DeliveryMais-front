@@ -1,0 +1,26 @@
+.detalhes-produto{
+  height: 500px;
+  overflow: auto;
+  align-content: flex-start;
+}
+
+.img-produto-modal{
+  object-fit: cover;
+  width: 100%;
+  height: 200px;
+}
+
+.produto-modal .promocao{
+  color: #23AD68;
+}
+
+
+.produto-modal .preco-antigo{
+  text-decoration: line-through;
+  color: #999;
+}
+
+.button-qtd{
+  font-size: 18pt;
+  vertical-align: middle;
+}

@@ -1,0 +1,13 @@
+.footer{
+  height: 80px;
+}
+
+.footer p{
+  width: 100%;
+}
+
+@media (max-width: 720px) {
+  .footer{
+    font-size: 12px;
+  }
+}

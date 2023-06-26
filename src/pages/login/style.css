@@ -1,0 +1,15 @@
+.form-login {
+  width: 330px;
+  padding: 15px;
+}
+
+.form-login input{
+  margin-bottom: 10px;
+}
+
+.background-login{
+  object-fit: cover;
+  object-position: left;
+  width: 100%;
+  height: 100vh;
+}

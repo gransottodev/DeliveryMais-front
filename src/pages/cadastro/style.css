@@ -1,0 +1,23 @@
+.form-cadastro {
+  width: 90%;
+  padding: 15px;
+}
+
+.form-cadastro input{
+  margin-bottom: 5px;
+}
+
+.form-cadastro select{
+  width: 100%;
+  height: 44px;
+  border: 1px solid #fff;
+  outline: none;
+  background-color: #fff;
+}
+
+.background-cadastro{
+  object-fit: cover;
+  object-position: left;
+  width: 100%;
+  height: 100vh;
+}

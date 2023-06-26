@@ -1,0 +1,18 @@
+.sidebar h5{
+  height: 30px;
+  margin-bottom: 0px;
+}
+
+.sidebar .footer{
+  height: 265px;
+}
+
+.sidebar .produtos{
+  height: calc(100% - 295px);
+  overflow: auto;
+  align-content: flex-start;
+}
+
+.btn_pedido{
+  height: 80px;
+}
