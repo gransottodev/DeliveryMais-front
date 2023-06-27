@@ -187,7 +187,7 @@ export function Checkout() {
               })}
             </ul>
           </div>
-          <div className="row mb-5">
+          <div className="row mb-2 p-2">
             <button
               className="btn btn-lg btn-danger mt-4"
               onClick={finalizarPedido}

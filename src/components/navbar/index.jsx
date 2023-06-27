@@ -17,20 +17,20 @@ export default function Navbar() {
   }
 
   function Logout() {
-    localStorage.removeItem('sessionToken')
-    localStorage.removeItem('sessionId')
-    localStorage.removeItem('sessionEmail')
-    localStorage.removeItem('sessionCodCidade')
-    localStorage.removeItem('sessionCidade')
-    localStorage.removeItem('sessionUf')
-    navigate('/login')
+    localStorage.removeItem("sessionToken");
+    localStorage.removeItem("sessionId");
+    localStorage.removeItem("sessionEmail");
+    localStorage.removeItem("sessionCodCidade");
+    localStorage.removeItem("sessionCidade");
+    localStorage.removeItem("sessionUf");
+    navigate("/login");
   }
 
   return (
     <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light ps-3 pe-3">
       <div className="container-fluid">
         <Link className="navbar-brand mt-1" to="/">
-          <img src={logo} alt="Delivery Mais" />
+          <img src={logo} alt="Delivery Mais" className="logo" />
         </Link>
         <button
           className="navbar-toggler"
@@ -65,62 +65,66 @@ export default function Navbar() {
             </div>
           </div>
 
-          <div className="mt-1">
-            <Link to={'/trocar-endereco'} className="btn btn-outline-danger me-3">
+          <div className="mt-1 navbar-content">
+            <Link
+              to={"/trocar-endereco"}
+              className="btn btn-outline-danger me-3 endereco"
+            >
               <i className="fas fa-map-marker-alt"></i> Entrega:{" "}
               {localStorage.getItem("sessionCidade")}
             </Link>
             {
               // <button className='btn btn-outline-danger me-3'><i className='fas fa-sign-in-alt'>Acessar</i></button>
             }
+            <div className="navbar-container">
+              <div className="btn-group">
+                <button
+                  type="button"
+                  className="btn btn-outline-danger me-3 dropdown-toggle usuario"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i className="fas fa-user"></i>
+                </button>
+                <ul className="dropdown-menu">
+                  <li>
+                    <Link to="/pedidos" className="dropdown-item">
+                      Pedidos
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/favoritos" className="dropdown-item">
+                      Favoritos
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/perfil" className="dropdown-item">
+                      Perfil
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/enderecos" className="dropdown-item">
+                      Meus Endereços
+                    </Link>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                  <li>
+                    <a href="#" className="dropdown-item" onClick={Logout}>
+                      Sair
+                    </a>
+                  </li>
+                </ul>
+              </div>
 
-            <div className="btn-group">
               <button
-                type="button"
-                className="btn btn-outline-danger me-3 dropdown-toggle"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
+                onClick={openSidebar}
+                className="btn btn-outline-danger sacola"
               >
-                <i className="fas fa-user"></i>
+                <i className="fas fa-shopping-bag"></i> Sacola{" "}
               </button>
-              <ul className="dropdown-menu">
-                <li>
-                  <Link to="/pedidos" className="dropdown-item">
-                    Pedidos
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/favoritos" className="dropdown-item">
-                    Favoritos
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/perfil" className="dropdown-item">
-                    Perfil
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/enderecos" className="dropdown-item">
-                    Meus Endereços
-                  </Link>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <a href="#" className="dropdown-item" onClick={Logout}>
-                    Sair
-                  </a>
-                </li>
-              </ul>
             </div>
-
-            <button
-              onClick={openSidebar}
-              className="btn btn-outline-danger me-3"
-            >
-              <i className="fas fa-shopping-bag"></i> Sacola{" "}
-            </button>
           </div>
         </div>
       </div>

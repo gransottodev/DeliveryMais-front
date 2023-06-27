@@ -22,12 +22,10 @@ export default function Modal(props) {
   const [grupos, setGrupos] = useState([]);
 
   const { cart, addItemCart } = useContext(CartContext);
-  const [blockBtn, setBlockBtn] = useState(true)
-  const [total, setTotal] = useState(0)
+  const [blockBtn, setBlockBtn] = useState(true);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
-
-
     if (props.id_produto === 0) {
       return;
     }
@@ -43,7 +41,11 @@ export default function Modal(props) {
         setVl_promocao(response.data.vl_promocao);
         setUrl_foto(response.data.url_foto);
         setQtd(1);
-        setTotal(response.data.vl_promocao > 0 ? response.data.vl_promocao : response.data.vl_produto)
+        setTotal(
+          response.data.vl_promocao > 0
+            ? response.data.vl_promocao
+            : response.data.vl_produto
+        );
       })
       .catch((error) => console.log(error));
 
@@ -61,7 +63,7 @@ export default function Modal(props) {
             qtd_max_escolha: grupo.qtd_max_escolha,
             ind_ativo: grupo.ind_ativo,
             ordem: grupo.ordem,
-            selecao: []
+            selecao: [],
           };
         });
 
@@ -74,14 +76,14 @@ export default function Modal(props) {
         });
 
         setGrupos(gruposUnico);
-        habilitarBotao(gruposUnico)
+        habilitarBotao(gruposUnico);
       })
       .catch((error) => console.log(error));
   }, [props.isOpen]);
 
   useEffect(() => {
-    calcularTotal(grupos)
-  }, [qtd])
+    calcularTotal(grupos);
+  }, [qtd]);
 
   function adicionarProduto() {
     setQtd(qtd + 1);
@@ -91,56 +93,55 @@ export default function Modal(props) {
     qtd > 1 ? setQtd(qtd - 1) : setQtd(1);
   }
 
-  function selectRadioButton(data){
-    let g = grupos
+  function selectRadioButton(data) {
+    let g = grupos;
 
-    let objIndex = grupos.findIndex(obj => obj.id_opcao == data.id_opcao )
+    let objIndex = grupos.findIndex((obj) => obj.id_opcao == data.id_opcao);
 
-    g[objIndex].selecao = [data]
+    g[objIndex].selecao = [data];
 
-    setGrupos(g)
-    habilitarBotao(g)
-    calcularTotal(g)
+    setGrupos(g);
+    habilitarBotao(g);
+    calcularTotal(g);
   }
 
-  function selectCheckBox(isChecked, data){
-    let g = grupos
-    let s = []
+  function selectCheckBox(isChecked, data) {
+    let g = grupos;
+    let s = [];
 
-    let objIndex = grupos.findIndex(obj => obj.id_opcao == data.id_opcao )
+    let objIndex = grupos.findIndex((obj) => obj.id_opcao == data.id_opcao);
 
     s = g[objIndex].selecao;
 
-    if(isChecked){
-      s.push(data)
+    if (isChecked) {
+      s.push(data);
     } else {
-      let objIndexSelecao = s.findIndex(obj => obj.id_item == data.id_item)
-      s.splice(objIndexSelecao, 1)
+      let objIndexSelecao = s.findIndex((obj) => obj.id_item == data.id_item);
+      s.splice(objIndexSelecao, 1);
     }
 
-    g[objIndex].selecao = s
-    setGrupos(g)
-    habilitarBotao(g)
-    calcularTotal(g)
+    g[objIndex].selecao = s;
+    setGrupos(g);
+    habilitarBotao(g);
+    calcularTotal(g);
   }
 
   function AddItem() {
+    let detalhes = [];
+    let vl_detalhes = 0;
 
-    let detalhes = []
-    let vl_detalhes = 0
-
-    grupos.map(item => {
-      item.selecao.map(sel => {
-        vl_detalhes += sel.vl_item
+    grupos.map((item) => {
+      item.selecao.map((sel) => {
+        vl_detalhes += sel.vl_item;
 
         detalhes.push({
           nome: sel.nome,
           id_item: sel.id_item,
           vl_item: sel.vl_item,
-          ordem: sel.ordem
-        })
-      })
-    })
+          ordem: sel.ordem,
+        });
+      });
+    });
 
     const item = {
       id_carrinho: uuidv4(),
@@ -149,37 +150,38 @@ export default function Modal(props) {
       descricao: nome,
       qtd: qtd,
       vl_unit: vl_detalhes + (vl_promocao > 0 ? vl_promocao : vl_produto),
-      vl_total: (vl_detalhes + (vl_promocao > 0 ? vl_promocao : vl_produto)) * qtd,
+      vl_total:
+        (vl_detalhes + (vl_promocao > 0 ? vl_promocao : vl_produto)) * qtd,
       url_foto: url_foto,
-      detalhes
+      detalhes,
     };
 
     addItemCart(item);
     props.onRequestClose();
   }
 
-  function habilitarBotao(grp){
-    let bloquear = false
+  function habilitarBotao(grp) {
+    let bloquear = false;
 
-    grp.map(item => {
-      if(item.ind_obrigatorio == "S" && item.selecao.length == 0){
-        bloquear = true
+    grp.map((item) => {
+      if (item.ind_obrigatorio == "S" && item.selecao.length == 0) {
+        bloquear = true;
       }
-    })
-    setBlockBtn(bloquear)
+    });
+    setBlockBtn(bloquear);
   }
 
-  function calcularTotal(grp){
+  function calcularTotal(grp) {
     let vl_selecao = 0;
-    let vl_prod = vl_promocao > 0 ? vl_promocao : vl_produto
+    let vl_prod = vl_promocao > 0 ? vl_promocao : vl_produto;
 
-    grp.map(item => {
-      item.selecao.map(sel => {
-        vl_selecao += sel.vl_item
-      })
-    })
+    grp.map((item) => {
+      item.selecao.map((sel) => {
+        vl_selecao += sel.vl_item;
+      });
+    });
 
-    setTotal((vl_selecao + vl_prod) * qtd)
+    setTotal((vl_selecao + vl_prod) * qtd);
   }
 
   return (
@@ -223,10 +225,9 @@ export default function Modal(props) {
           </div>
           <div className="col-12 mb-4">
             {grupos.map((grupo) => {
-
               let op = opcoes.filter((item, index, arr) => {
-                return item.id_opcao == grupo.id_opcao
-              })
+                return item.id_opcao == grupo.id_opcao;
+              });
 
               return grupo.qtd_max_escolha === 1 ? (
                 <ProdutoItemRadio
@@ -237,9 +238,9 @@ export default function Modal(props) {
                   onClickItem={selectRadioButton}
                 />
               ) : (
-                <ProdutoItemCheckBox 
-                  key={grupo.id_opcao} 
-                  titulo={grupo.descricao} 
+                <ProdutoItemCheckBox
+                  key={grupo.id_opcao}
+                  titulo={grupo.descricao}
                   opcoes={op}
                   onClickItem={selectCheckBox}
                 />
@@ -249,24 +250,29 @@ export default function Modal(props) {
         </div>
         <div className="row">
           <div className="col-12 mt-3 d-flex justify-content-end">
-            <div>
+            <div className="cartActions">
+              <div>
+                <button
+                  className="btn btn-outline-danger"
+                  onClick={removerProduto}
+                >
+                  <i className="fa-solid fa-minus" />
+                </button>
+                <span className="m-3 button-qtd">{FormatDecimal(qtd)}</span>
+                <button
+                  className="btn btn-outline-danger"
+                  onClick={adicionarProduto}
+                >
+                  <i className="fa-solid fa-plus" />
+                </button>
+              </div>
+
               <button
-                className="btn btn-outline-danger"
-                onClick={removerProduto}
+                className="btn btn-danger btn-adicionar"
+                onClick={AddItem}
+                disabled={blockBtn}
               >
-                <i className="fa-solid fa-minus" />
-              </button>
-              <span className="m-3 button-qtd">{FormatDecimal(qtd)}</span>
-              <button
-                className="btn btn-outline-danger"
-                onClick={adicionarProduto}
-              >
-                <i className="fa-solid fa-plus" />
-              </button>
-              <button className="btn btn-danger ms-4" onClick={AddItem} disabled={blockBtn}>
-                Adicionar a sacola (
-                {CurrencyFormat(total)}
-                )
+                Adicionar a sacola ({CurrencyFormat(total)})
               </button>
             </div>
           </div>

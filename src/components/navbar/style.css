@@ -1,3 +1,36 @@
 .navbar-ligth{
   background-color: #fff !important;
 }
+
+@media (max-width: 330px) {
+  .logo{
+    width: 150px;
+  }
+}
+
+.navbar-content{
+  display: flex;
+}
+
+@media (max-width : 500px) {
+  .navbar-content{
+    flex-direction: column;
+  }
+
+  .endereco{
+    display: block;
+    width: 100%;
+  }
+
+  .navbar-container{
+    width: 100%;
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .sacola{
+    width: 50%;
+    margin-right: 0;
+  }
+}
