@@ -21,11 +21,14 @@ export default function Modal(props) {
   const [opcoes, setOpcoes] = useState([]);
   const [grupos, setGrupos] = useState([]);
 
-  const { cart, addItemCart } = useContext(CartContext);
+  const { addItemCart } = useContext(CartContext);
   const [blockBtn, setBlockBtn] = useState(true);
   const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
+
     if (props.id_produto === 0) {
       return;
     }
@@ -77,6 +80,7 @@ export default function Modal(props) {
 
         setGrupos(gruposUnico);
         habilitarBotao(gruposUnico);
+        setLoading(false);
       })
       .catch((error) => console.log(error));
   }, [props.isOpen]);
@@ -194,90 +198,99 @@ export default function Modal(props) {
       <button onClick={props.onRequestClose} className="react-modal-close">
         <img src={closeIcon} alt="fechar" className="z-3" />
       </button>
+      {loading ? (
+        <div className="text-center m-5">
+          <span
+            className="spinner-grow spinner-grow-sm text-danger"
+            role="status"
+          ></span>
+          <span className="ms-2 text-danger">Buscando dados do produto...</span>
+        </div>
+      ) : (
+        <div className="container-fluid h-100 produto-modal">
+          <div className="row detalhes-produto">
+            <div>
+              <img
+                className="img-fluid rounded img-produto-modal"
+                src={url_foto}
+                alt="produto"
+              />
+            </div>
 
-      <div className="container-fluid h-100 produto-modal">
-        <div className="row detalhes-produto">
-          <div>
-            <img
-              className="img-fluid rounded img-produto-modal"
-              src={url_foto}
-              alt="produto"
-            />
-          </div>
-
-          <div className="col-12 mt-2">
-            <h4 className="mt-2">{nome}</h4>
-            <small className="d-block">{descricao}</small>
-            {vl_promocao > 0 ? (
-              <>
-                <small className="mt-3 promocao">
-                  {CurrencyFormat(vl_promocao)}
-                </small>
-                <small className="mt-3 ms-4 preco-antigo">
+            <div className="col-12 mt-2">
+              <h4 className="mt-2">{nome}</h4>
+              <small className="d-block">{descricao}</small>
+              {vl_promocao > 0 ? (
+                <>
+                  <small className="mt-3 promocao">
+                    {CurrencyFormat(vl_promocao)}
+                  </small>
+                  <small className="mt-3 ms-4 preco-antigo">
+                    {CurrencyFormat(vl_produto)}
+                  </small>
+                </>
+              ) : (
+                <small className="mt-3 text-success">
                   {CurrencyFormat(vl_produto)}
                 </small>
-              </>
-            ) : (
-              <small className="mt-3 text-success">
-                {CurrencyFormat(vl_produto)}
-              </small>
-            )}
-          </div>
-          <div className="col-12 mb-4">
-            {grupos.map((grupo) => {
-              let op = opcoes.filter((item, index, arr) => {
-                return item.id_opcao == grupo.id_opcao;
-              });
+              )}
+            </div>
+            <div className="col-12 mb-4">
+              {grupos.map((grupo) => {
+                let op = opcoes.filter((item, index, arr) => {
+                  return item.id_opcao == grupo.id_opcao;
+                });
 
-              return grupo.qtd_max_escolha === 1 ? (
-                <ProdutoItemRadio
-                  key={grupo.id_opcao}
-                  titulo={grupo.descricao}
-                  obrigatorio={grupo.ind_obrigatorio == "S"}
-                  opcoes={op}
-                  onClickItem={selectRadioButton}
-                />
-              ) : (
-                <ProdutoItemCheckBox
-                  key={grupo.id_opcao}
-                  titulo={grupo.descricao}
-                  opcoes={op}
-                  onClickItem={selectCheckBox}
-                />
-              );
-            })}
+                return grupo.qtd_max_escolha === 1 ? (
+                  <ProdutoItemRadio
+                    key={grupo.id_opcao}
+                    titulo={grupo.descricao}
+                    obrigatorio={grupo.ind_obrigatorio == "S"}
+                    opcoes={op}
+                    onClickItem={selectRadioButton}
+                  />
+                ) : (
+                  <ProdutoItemCheckBox
+                    key={grupo.id_opcao}
+                    titulo={grupo.descricao}
+                    opcoes={op}
+                    onClickItem={selectCheckBox}
+                  />
+                );
+              })}
+            </div>
           </div>
-        </div>
-        <div className="row">
-          <div className="col-12 mt-3 d-flex justify-content-end">
-            <div className="cartActions">
-              <div>
+          <div className="row">
+            <div className="col-12 mt-3 d-flex justify-content-end">
+              <div className="cartActions">
+                <div>
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={removerProduto}
+                  >
+                    <i className="fa-solid fa-minus" />
+                  </button>
+                  <span className="m-3 button-qtd">{FormatDecimal(qtd)}</span>
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={adicionarProduto}
+                  >
+                    <i className="fa-solid fa-plus" />
+                  </button>
+                </div>
+
                 <button
-                  className="btn btn-outline-danger"
-                  onClick={removerProduto}
+                  className="btn btn-danger btn-adicionar"
+                  onClick={AddItem}
+                  disabled={blockBtn}
                 >
-                  <i className="fa-solid fa-minus" />
-                </button>
-                <span className="m-3 button-qtd">{FormatDecimal(qtd)}</span>
-                <button
-                  className="btn btn-outline-danger"
-                  onClick={adicionarProduto}
-                >
-                  <i className="fa-solid fa-plus" />
+                  Adicionar a sacola ({CurrencyFormat(total)})
                 </button>
               </div>
-
-              <button
-                className="btn btn-danger btn-adicionar"
-                onClick={AddItem}
-                disabled={blockBtn}
-              >
-                Adicionar a sacola ({CurrencyFormat(total)})
-              </button>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </ModalProduto>
   );
 }
