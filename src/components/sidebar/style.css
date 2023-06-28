@@ -16,9 +16,3 @@
 .btn_pedido{
   height: 80px;
 }
-
-@media (max-width : 320px){
-  .sidebar{
-    width: 100%;
-  }
-}

@@ -8,10 +8,13 @@ import api from '../../services/api'
 
 export default function Pedidos(){
   const [pedidos, setPedidos] = useState([])
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
+    setLoading(true)
     api.get('/v1/pedidos').then(response => {
       setPedidos(response.data)
+      setLoading(false)
     })
     .catch(error => {
       console.log(error);
@@ -27,6 +30,15 @@ export default function Pedidos(){
           <h2 className='mt-2'>Meus Pedidos</h2>
         </div>
         
+        {loading ? (
+          <div className="text-center m-5">
+            <span
+              className="spinner-grow spinner-grow-sm text-danger"
+              role="status"
+            ></span>
+            <span className="ms-2 text-danger">Buscando pedidos...</span>
+          </div>
+        ) : null}
         <div className='row mt-5'>
           {
             pedidos.map(pedido => {

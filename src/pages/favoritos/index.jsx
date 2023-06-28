@@ -6,10 +6,15 @@ import api from '../../services/api'
 
 export default function Favoritos(){
   const [favoritos, setFavoritos] = useState([])
+  const [loading, setLoading] = useState(false)
 
   function ListarFavoritos(){
+    setLoading(true)
     api.get('/v1/estabelecimentos/favoritos')
-      .then(response => setFavoritos(response.data))
+      .then(response => {
+        setFavoritos(response.data)
+        setLoading(false)
+      })
   }
 
   function DeleteFavorito(id){
@@ -31,6 +36,15 @@ export default function Favoritos(){
           <h3>Meus favoritos</h3>
         </div>
 
+        {loading ? (
+          <div className="text-center m-5">
+            <span
+              className="spinner-grow spinner-grow-sm text-danger"
+              role="status"
+            ></span>
+            <span className="ms-2 text-danger">Buscando restaurantes ...</span>
+          </div>
+        ) : null}
         <div className="row m-2">
           {
             favoritos.map(estabelecimento => {

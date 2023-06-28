@@ -3,20 +3,23 @@ import Endereco from "../../components/enderecos/lista";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
 import { EnderecoModal } from "../../components/enderecos/modal";
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 import api from "../../services/api";
 
 export default function Enderecos() {
   const [openModal, setOpenModal] = useState(false);
   const [enderecos, setEnderecos] = useState([]);
-  const [dadosEndereco, setDadosEndereco] = useState([])
+  const [dadosEndereco, setDadosEndereco] = useState([]);
+  const [loading, setLoading] = useState(false)
 
   function ListarEnderecos() {
+    setLoading(true)
     api
       .get("/v1/usuarios/enderecos")
       .then((response) => {
         setEnderecos(response.data);
+        setLoading(false)
       })
       .catch((error) => console.log(error));
   }
@@ -27,52 +30,55 @@ export default function Enderecos() {
 
   function openModalEndereco(id) {
     if (id > 0) {
-      api.get(`/v1/usuarios/enderecos/${id}`)
-        .then(response => {
-          setDadosEndereco(response.data[0])
-          setOpenModal(true)
+      api
+        .get(`/v1/usuarios/enderecos/${id}`)
+        .then((response) => {
+          setDadosEndereco(response.data[0]);
+          setOpenModal(true);
         })
-        .catch(error => console.log(error))
+        .catch((error) => console.log(error));
     } else {
-      setDadosEndereco([])
-      setOpenModal(true)
+      setDadosEndereco([]);
+      setOpenModal(true);
     }
   }
 
   function deleteEndereco(id) {
     confirmAlert({
-      title: 'Excluir',
-      message: 'Excluir endereço?',
+      title: "Excluir",
+      message: "Excluir endereço?",
       buttons: [
         {
-          label: 'Sim',
+          label: "Sim",
           onClick: () => {
-            api.delete(`/v1/usuarios/enderecos/${id}`)
-              .then(response => {
-                ListarEnderecos()
+            api
+              .delete(`/v1/usuarios/enderecos/${id}`)
+              .then((response) => {
+                ListarEnderecos();
               })
-              .catch(error => console.log(error))
-          }
+              .catch((error) => console.log(error));
+          },
         },
         {
-          label: 'Não',
-          onClick: () => null
-        }
-      ]
+          label: "Não",
+          onClick: () => null,
+        },
+      ],
     });
   }
 
   function closeModalEndereco() {
     setOpenModal(false);
-    ListarEnderecos()
+    ListarEnderecos();
   }
 
   function enderecoPadrao(id) {
-    api.patch(`/v1/usuarios/enderecos/padrao/${id}`)
-      .then(response => {
-        ListarEnderecos()
+    api
+      .patch(`/v1/usuarios/enderecos/padrao/${id}`)
+      .then((response) => {
+        ListarEnderecos();
       })
-      .catch(error => console.log(error))
+      .catch((error) => console.log(error));
   }
 
   return (
@@ -88,11 +94,21 @@ export default function Enderecos() {
           <h2 className="mt-2">Meus Endereços</h2>
           <button
             className="btn btn-sm btn-outline-danger"
-            onClick={e => openModalEndereco(0)}
+            onClick={(e) => openModalEndereco(0)}
           >
             Adicionar endereço
           </button>
         </div>
+
+        {loading ? (
+          <div className="text-center m-5">
+            <span
+              className="spinner-grow spinner-grow-sm text-danger"
+              role="status"
+            ></span>
+            <span className="ms-2 text-danger">Buscando endereços...</span>
+          </div>
+        ) : null}
 
         <div className="row mt-5">
           {enderecos.map((endereco) => {

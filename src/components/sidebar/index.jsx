@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { Dock } from "react-dock";
 import { CartContext } from "../../contexts/cart-context";
-import closeIcon from '../../assets/close.png'
+import closeIcon from "../../assets/close.png";
 import Produto from "../produto/sacola";
 import Sacola from "../../assets/bag.png";
 import { CurrencyFormat } from "../../utils/currency_format";
@@ -22,9 +22,9 @@ export default function Sidebar() {
     msg,
   } = useContext(CartContext);
   const [show, setShow] = useState(false);
-  const [cartWidth, setCartWidth] = useState(0);
-  const [cartSize, setCartSize] = useState(0);
   const [cartBackIcon, setCartBackIcon] = useState(false);
+  const [displayWidth, setDisplayWidth] = useState(window.innerWidth);
+  const [cartWidth, setCartWidth] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,22 +34,21 @@ export default function Sidebar() {
   }, []);
 
   useEffect(() => {
-    setCartWidth(window.innerWidth);
-    window.addEventListener("resize", function () {
-      let largura = window.innerWidth;
-      setCartWidth(largura);
+    window.addEventListener("resize", () => {
+      let width = window.innerWidth;
+      setDisplayWidth(width);
     });
   }, []);
 
   useEffect(() => {
-    if (cartWidth >= 800) {
-      setCartSize(420);
+    if (displayWidth >= 800) {
+      setCartWidth(500);
       setCartBackIcon(false)
     } else {
-      setCartSize(cartWidth);
+      setCartWidth(displayWidth);
       setCartBackIcon(true);
     }
-  }, [cartWidth]);
+  }, [displayWidth]);
 
   function finalizarPedido() {
     setShow(false);
@@ -61,21 +60,22 @@ export default function Sidebar() {
       position="right"
       isVisible={show}
       fluid={false}
-      size={cartSize}
+      size={cartWidth}
+      defaultSize={cartWidth}
       onVisibleChange={(visible) => {
         setShow(visible);
       }}
     >
       {cartBackIcon ? (
-        <button onClick={e => setShow(false)} className="react-modal-close">
-        <img src={closeIcon} alt="fechar" className="z-3" />
-      </button>
+        <button onClick={(e) => setShow(false)} className="react-modal-close">
+          <img src={closeIcon} alt="fechar" className="z-3" />
+        </button>
       ) : null}
-      
+
       {cart.length > 0 ? (
-        <div className="container-fluid h-100 pt-4 sidebar">
+        <div className="container-fluid h-100 pt-2 sidebar">
           <h5>Minha sacola</h5>
-          <div className="row produtos">
+          <div className="row produtos p-2">
             {cart.map((produto) => {
               return (
                 <Produto
@@ -95,49 +95,51 @@ export default function Sidebar() {
           </div>
 
           <div className="row align-items-end footer">
-            <div className="col-12 d-flex justify-content-between align-items-center">
-              <span>Subtotal</span>
-              <span>{CurrencyFormat(subtotal)}</span>
-            </div>
-
-            <div className="col-12 d-flex justify-content-between align-items-center mt-2">
-              <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Cupom"
-                  onChange={(e) => setCupom(e.target.value)}
-                  value={cupom}
-                />
-                <button
-                  className="btn btn-outline-success"
-                  type="button"
-                  id="button-addon2"
-                  onClick={validarCupom}
-                >
-                  Aplicar
-                </button>
+            <div className="row gap-2">
+              <div className="col-12 d-flex justify-content-between align-items-center">
+                <span>Subtotal</span>
+                <span>{CurrencyFormat(subtotal)}</span>
               </div>
 
-              <div className="d-flex flex-column input-group justify-content-center align-items-end">
-                {msg.length > 0 ? (
-                  <small className="text-danger ">{msg}</small>
-                ) : null}
-                <span className="d-inline-blok text-success">
-                  {" "}
-                  - {CurrencyFormat(desconto)}
-                </span>
+              <div className="col-12 d-flex justify-content-between align-items-center mt-2">
+                <div className="input-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Cupom"
+                    onChange={(e) => setCupom(e.target.value)}
+                    value={cupom}
+                  />
+                  <button
+                    className="btn btn-outline-success"
+                    type="button"
+                    id="button-addon2"
+                    onClick={validarCupom}
+                  >
+                    Aplicar
+                  </button>
+                </div>
+
+                <div className="d-flex flex-column input-group justify-content-center align-items-end">
+                  {msg.length > 0 ? (
+                    <small className="text-danger ">{msg}</small>
+                  ) : null}
+                  <span className="d-inline-blok text-success">
+                    {" "}
+                    - {CurrencyFormat(desconto)}
+                  </span>
+                </div>
               </div>
-            </div>
 
-            <div className="col-12 d-flex justify-content-between align-items-center mt-2">
-              <span>Taxa de Entrega: </span>
-              <span>{CurrencyFormat(entregaCart)}</span>
-            </div>
+              <div className="col-12 d-flex justify-content-between align-items-center mt-2">
+                <span>Taxa de Entrega: </span>
+                <span>{CurrencyFormat(entregaCart)}</span>
+              </div>
 
-            <div className="col-12 d-flex justify-content-between align-items-center mt-3">
-              <b>Total :</b>
-              <h3>{CurrencyFormat(total)}</h3>
+              <div className="col-12 d-flex justify-content-between align-items-center mt-3">
+                <b>Total :</b>
+                <h3>{CurrencyFormat(total)}</h3>
+              </div>
             </div>
 
             <button

@@ -62,8 +62,8 @@ body{
 
 @media (max-width : 800px) {
   .react-modal-close{
-    right: 30px;
-    top: 30px;
+    right: 20px;
+    top: 15px;
   }
 }
 
