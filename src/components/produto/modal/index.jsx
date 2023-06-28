@@ -27,7 +27,6 @@ export default function Modal(props) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log(cart);
     setLoading(true);
 
     if (props.id_produto === 0) {
