@@ -27,6 +27,7 @@ export default function Modal(props) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    console.log(cart);
     setLoading(true);
 
     if (props.id_produto === 0) {
@@ -131,12 +132,14 @@ export default function Modal(props) {
   }
 
   function AddItem() {
-    if(cart[0].id_estabelecimento !== props.id_estabelecimento){
-      alert('Já existem produtos de outros restaurantes em sua sacola!')
-      return
+
+    if(cart.length > 0){
+      if(cart[0].id_estabelecimento !== props?.id_estabelecimento){
+        alert('Já existem produtos de outros restaurantes em sua sacola!')
+        return
+      }
     }
-
-
+    
     let detalhes = [];
     let vl_detalhes = 0;
 
