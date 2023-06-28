@@ -64,6 +64,7 @@ body{
   .react-modal-close{
     right: 20px;
     top: 15px;
+    z-index: 999;
   }
 }
 

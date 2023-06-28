@@ -205,7 +205,7 @@ export default function Modal(props) {
       className="react-modal-content"
     >
       <button onClick={props.onRequestClose} className="react-modal-close">
-        <img src={closeIcon} alt="fechar" className="z-3" />
+        <img src={closeIcon} alt="fechar"/>
       </button>
       {loading ? (
         <div className="text-center m-5">
