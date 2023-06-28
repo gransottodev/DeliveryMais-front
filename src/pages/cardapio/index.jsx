@@ -126,6 +126,7 @@ export default function Cardapio() {
         isOpen={openModal}
         onRequestClose={closeModalProduto}
         id_produto={id_produto}
+        id_estabelecimento={id}
       />
 
       {loading ? (

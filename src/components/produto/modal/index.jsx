@@ -21,7 +21,7 @@ export default function Modal(props) {
   const [opcoes, setOpcoes] = useState([]);
   const [grupos, setGrupos] = useState([]);
 
-  const { addItemCart } = useContext(CartContext);
+  const { cart ,addItemCart } = useContext(CartContext);
   const [blockBtn, setBlockBtn] = useState(true);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -131,6 +131,12 @@ export default function Modal(props) {
   }
 
   function AddItem() {
+    if(cart[0].id_estabelecimento !== props.id_estabelecimento){
+      alert('Já existem produtos de outros restaurantes em sua sacola!')
+      return
+    }
+
+
     let detalhes = [];
     let vl_detalhes = 0;
 
@@ -150,6 +156,7 @@ export default function Modal(props) {
     const item = {
       id_carrinho: uuidv4(),
       id_produto: id_produto,
+      id_estabelecimento: props.id_estabelecimento,
       nome: nome,
       descricao: nome,
       qtd: qtd,
