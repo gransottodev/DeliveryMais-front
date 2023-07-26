@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+# DeliveryApp 🚀
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Descrição
 
-## Available Scripts
+O DeliveryApp é um aplicativo web de delivery que permite aos usuários fazer pedidos de comida e acompanhar o processo de entrega. 
+Ele foi desenvolvido utilizando ReactJS no front-end, Node.js (Express) no back-end e um banco de dados MySQL para armazenar os dados. 
+A Context API foi utilizada para gerenciamento de estado de autenticação e a biblioteca Axios para realizar as requisições HTTP.
 
-In the project directory, you can run:
+## Funcionalidades
 
-### `npm start`
+- Realizar Registro e Login.
+- Realizar pedidos de comida.
+- Cupons de desconto funcionais.
+- Visualizar carrinho de compras atualizado em tempo real.
+- Adicionar e remover endereços e locais de entrega.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Capturas de Tela
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![image](https://github.com/gransottodev/DeliveryMais-front/assets/101595139/636f4475-4742-47fe-af1d-cf90c97d9d71)
+![image](https://github.com/gransottodev/DeliveryMais-front/assets/101595139/3be41721-7b97-414b-8ac3-683727e61d6a)
+![image](https://github.com/gransottodev/DeliveryMais-front/assets/101595139/6630eada-5b04-4884-9376-b5033a8233c0)
+![image](https://github.com/gransottodev/DeliveryMais-front/assets/101595139/430f1ee4-da9d-48b1-977c-28cdcd4c91ce)
+![image](https://github.com/gransottodev/DeliveryMais-front/assets/101595139/ded62689-1376-4193-917d-c65e3555b0f7)
+![image](https://github.com/gransottodev/DeliveryMais-front/assets/101595139/d1d4480b-b7aa-4d61-b85e-10250f1e8e2d)
+![image](https://github.com/gransottodev/DeliveryMais-front/assets/101595139/ad396d32-640a-4ae0-b9f5-f924ebbe286a)
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Instalação
 
-### `npm run build`
+1. Clone este repositório em sua máquina local.
+2. Instale as dependências do servidor:
+```
+$ git clone https://github.com/gransottodev/DeliveryMais-front.git
+$ cd DeliveryMais-front
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Inicie o projeto com:
+$ yarn dev
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<br/>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+  O backend está em um repositório separado: https://github.com/gransottodev/DeliveryAPI
+```
 
-### `npm run eject`
+Veja o funcionamento no vídeo demonstrativo abaixo: 
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+[![Video Demonstrativo](https://zmfdqgysmipldtuqweis.supabase.co/storage/v1/object/public/delivery/Background.png?t=2023-07-26T12%3A14%3A38.282Z)](https://zmfdqgysmipldtuqweis.supabase.co/storage/v1/object/public/delivery/Design%20sem%20nome.mp4?t=2023-07-26T12%3A12%3A37.340Z)
